@@ -35,16 +35,16 @@ function saveState() {
 
 // Calculate days together since a landmark date (Dennis & Lorraine's starting point: say Aug 12, 2018)
 function updateDaysTogether() {
-  const startDate = new Date("2018-08-12");
+  const startDate = new Date("2026-05-05");
   const today = new Date();
   const diffTime = Math.abs(today - startDate);
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  
+
   const element = document.getElementById("days-together-counter");
   if (element) {
     element.textContent = `${diffDays} Beautiful Days Together`;
   }
-  
+
   const headerVal = document.getElementById("days-together-val-header");
   if (headerVal) {
     headerVal.textContent = `${diffDays} Days`;
@@ -58,7 +58,7 @@ function checkStreak() {
     const yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
     const yesterdayStr = yesterday.toDateString();
-    
+
     if (state.lastActiveDate === yesterdayStr) {
       // Streak continues!
       state.studyStreak += 1;
@@ -69,7 +69,7 @@ function checkStreak() {
     state.lastActiveDate = todayStr;
     saveState();
   }
-  
+
   const streakEl = document.getElementById("streak-count");
   if (streakEl) streakEl.textContent = state.studyStreak;
 }
@@ -112,7 +112,7 @@ function switchTab(tabId) {
 function startClockAndGreeting() {
   function tick() {
     const now = new Date();
-    
+
     // Header digital clock
     const clockEl = document.getElementById("local-time-clock");
     if (clockEl) {
@@ -176,7 +176,7 @@ function startClockAndGreeting() {
 // Countdown Clock for July Exams
 function startCountdown() {
   const examTime = new Date(PLANNER_DATA.examDate).getTime();
-  
+
   function updateCountdown() {
     const now = new Date().getTime();
     const distance = examTime - now;
@@ -234,7 +234,7 @@ function drawScheduleDial() {
     // SVG angles start at 3 o'clock. To start at 12 o'clock, subtract 90 degrees.
     const startDeg = (startMin * 0.25) - 90;
     let endDeg = (endMin * 0.25) - 90;
-    
+
     // If it spans past midnight
     if (endMin < startMin) {
       endDeg += 360;
@@ -265,12 +265,12 @@ function drawScheduleDial() {
     path.setAttribute("fill", item.color);
     path.setAttribute("class", "dial-sector");
     path.setAttribute("data-index", idx);
-    
+
     // Click event to show detailed information
     path.addEventListener("click", () => {
       document.querySelectorAll(".dial-sector").forEach(w => w.classList.remove("active"));
       path.classList.add("active");
-      
+
       // Update dial center details
       document.getElementById("dial-center-title").textContent = item.title;
       document.getElementById("dial-center-title").setAttribute("fill", item.color);
@@ -280,10 +280,10 @@ function drawScheduleDial() {
       document.getElementById("detail-title").textContent = item.title;
       document.getElementById("detail-time").textContent = `${item.time} (${item.duration})`;
       document.getElementById("detail-romantic-note").textContent = item.note;
-      
+
       const tagEl = document.getElementById("detail-tag");
       tagEl.textContent = item.id.toUpperCase().replace("-", " ");
-      
+
       const detailsCard = document.getElementById("schedule-details-box");
       detailsCard.style.borderColor = item.color;
 
@@ -296,7 +296,7 @@ function drawScheduleDial() {
           node.classList.remove("active");
         }
       });
-      
+
       createHeartWave(3);
     });
 
@@ -446,17 +446,17 @@ function renderStudyUnits() {
       cb.addEventListener("change", (e) => {
         const uId = e.target.getAttribute("data-unit");
         const idx = e.target.getAttribute("data-index");
-        
+
         if (e.target.checked) {
           state.completedTopics[`${uId}_${idx}`] = true;
           createHeartWave(4);
         } else {
           delete state.completedTopics[`${uId}_${idx}`];
         }
-        
+
         saveState();
         updateOverallProgress();
-        
+
         // Update specific card percentage badge instantly
         let updatedCompleted = 0;
         checkboxes.forEach(box => { if (box.checked) updatedCompleted++; });
@@ -471,8 +471,8 @@ function renderStudyUnits() {
 
 function hexToRgb(hex) {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  return result ? 
-    `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` 
+  return result ?
+    `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}`
     : '255, 255, 255';
 }
 
@@ -507,14 +507,14 @@ function setupTimerControls() {
   modeBtns.forEach(btn => {
     btn.addEventListener("click", () => {
       if (timerIsRunning) return; // ignore when active
-      
+
       modeBtns.forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
-      
+
       timerSecondsRemaining = parseInt(btn.getAttribute("data-time"));
       currentTimerMode = btn.getAttribute("data-mode");
       updateDigits();
-      
+
       // Sweet break intervention note
       if (currentTimerMode === "break") {
         document.getElementById("timer-whisper").textContent = "Time to rest! Stand up, stretch, and send Lorraine a heart message. I'm waiting! ❤️";
@@ -531,7 +531,7 @@ function setupTimerControls() {
     timerIsRunning = true;
     startBtn.disabled = true;
     pauseBtn.disabled = false;
-    
+
     // Rotate vinyl player
     const disc = document.getElementById("vinyl-disc");
     disc.style.animationPlayState = "running";
@@ -543,7 +543,7 @@ function setupTimerControls() {
       if (timerSecondsRemaining > 0) {
         timerSecondsRemaining--;
         updateDigits();
-        
+
         // Log statistical study minute ticks
         if (timerSecondsRemaining % 60 === 0 && currentTimerMode !== "break") {
           state.minutesTicked++;
@@ -653,7 +653,7 @@ function startSynthesizer() {
 
     synthNode.type = "triangle";
     synthNode.frequency.setValueAtTime(110, audioCtx.currentTime); // A2 pitch
-    
+
     // Add detune chord oscillators programmatically
     const osc2 = audioCtx.createOscillator();
     osc2.type = "sine";
@@ -746,7 +746,7 @@ function startSynthesizer() {
         gainNode.gain.setValueAtTime(0.01, audioCtx.currentTime);
         gainNode.gain.linearRampToValueAtTime(0.06, audioCtx.currentTime + 3);
         gainNode.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 6);
-      } catch (e) {}
+      } catch (e) { }
     }, 6000);
   }
 }
@@ -758,9 +758,9 @@ function stopSynthesizer() {
   // Stop custom oscillators
   if (synthNode) {
     if (synthNode.oscRefs) {
-      synthNode.oscRefs.forEach(osc => { try { osc.stop(); } catch(e) {} });
+      synthNode.oscRefs.forEach(osc => { try { osc.stop(); } catch (e) { } });
     } else {
-      try { synthNode.stop(); } catch(e) {}
+      try { synthNode.stop(); } catch (e) { }
     }
     synthNode = null;
   }
@@ -768,7 +768,7 @@ function stopSynthesizer() {
   // Stop noise sources
   if (noiseNode) {
     if (noiseNode.waveInterval) clearInterval(noiseNode.waveInterval);
-    try { noiseNode.stop(); } catch(e) {}
+    try { noiseNode.stop(); } catch (e) { }
     noiseNode = null;
   }
 }
@@ -800,18 +800,18 @@ function createFloatingHeart(xOffset = null) {
 
   const heart = document.createElement("div");
   heart.className = "floating-heart";
-  
+
   const hearts = ["❤️", "💖", "💋", "💕", "🌸", "🧸", "✨"];
   heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
-  
+
   // Custom horizontal spread
   const left = xOffset !== null ? xOffset : Math.random() * 100;
   heart.style.left = `${left}%`;
-  
+
   // Custom scaling and duration variance
   const scale = 0.5 + Math.random() * 0.8;
   const duration = 2.5 + Math.random() * 2;
-  
+
   heart.style.transform = `scale(${scale})`;
   heart.style.animationDuration = `${duration}s`;
 
@@ -840,7 +840,7 @@ function alertLoveTokenPopup(title, message, icon = "💌") {
   document.getElementById("token-dialog-icon").textContent = icon;
   document.getElementById("token-dialog-title").textContent = title;
   document.getElementById("token-dialog-message").textContent = message;
-  
+
   overlay.classList.add("open");
   createHeartWave(12);
 }
@@ -1013,10 +1013,10 @@ function setupJournalForm() {
 
     state.reflections.unshift(newReflection); // add to top
     saveState();
-    
+
     input.value = ""; // clear input
     renderReflections();
-    
+
     createHeartWave(8);
     alertLoveTokenPopup("🔒 Log Locked in Vault!", "Your reflection has been safely logged. Lorraine will read this and smile! You are doing amazing.", "🔒");
   });
