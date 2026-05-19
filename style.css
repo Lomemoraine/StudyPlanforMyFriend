@@ -1485,7 +1485,9 @@ html, body {
 
 .dialog-card {
   width: 100%;
-  max-width: 460px;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow-y: auto;
   background: linear-gradient(135deg, rgba(35, 17, 56, 0.95) 0%, rgba(15, 8, 28, 0.98) 100%);
   border: 1.5px solid var(--border-rose-gold);
   border-radius: var(--border-radius-lg);
@@ -1559,7 +1561,8 @@ html, body {
   box-shadow: 0 10px 50px rgba(0, 0, 0, 0.8), inset 0 0 40px rgba(139, 69, 19, 0.08);
   font-family: 'Playfair Display', Georgia, serif;
   text-align: left;
-  max-width: 500px;
+  max-width: 580px !important;
+  width: 100%;
 }
 
 .letter-parchment h3 {
@@ -1944,7 +1947,7 @@ html, body {
   }
 
   .letter-parchment {
-    max-width: 95%;
+    max-width: 95% !important;
     padding: 20px;
   }
 
