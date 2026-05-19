@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>To Dennis, My Love - Study & Life Planner</title>
-  
+
   <!-- Google Fonts for Romance and Modernity -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
-  
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap"
+    rel="stylesheet">
+
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
   <!-- Floating Hearts Overlay Container -->
@@ -20,15 +24,15 @@
 
   <!-- Main App Layout -->
   <div class="app-container">
-    
+
     <!-- Sidebar Navigation -->
     <aside class="sidebar">
       <div class="sidebar-header">
         <div class="love-heart-pulse">❤️</div>
-        <h1>Dennis & Lorraine</h1>
-        <p class="subtitle">Our Journey to July & Beyond</p>
+        <h1>Dennis </h1>
+        <p class="subtitle">Your Journey to July & Beyond</p>
       </div>
-      
+
       <nav class="nav-menu">
         <button class="nav-btn active" data-tab="dashboard">
           <span class="nav-icon">✨</span> Dashboard
@@ -46,7 +50,7 @@
           <span class="nav-icon">🔒</span> Love Vault
         </button>
       </nav>
-      
+
       <div class="sidebar-footer">
         <p>Made with ❤️ by Lorraine</p>
         <p class="days-together" id="days-together-counter">Loading our days...</p>
@@ -55,7 +59,7 @@
 
     <!-- Main Content Area -->
     <main class="main-content">
-      
+
       <!-- HEADER -->
       <header class="top-header">
         <div class="header-greet">
@@ -75,7 +79,7 @@
       <!-- TAB 1: DASHBOARD -->
       <section id="dashboard" class="tab-panel active">
         <div class="grid-layout cols-2-1">
-          
+
           <!-- Column 1: Main Overview -->
           <div class="panel-column">
             <!-- Romantic Greeting Card -->
@@ -97,17 +101,24 @@
                 <div class="balance-visual-small">
                   <div class="progress-bar-container">
                     <span class="bar-label">Sleep (Rest Recharge)</span>
-                    <div class="progress-track"><div class="progress-fill" style="width: 25%; background: var(--purple-accent);"></div></div>
+                    <div class="progress-track">
+                      <div class="progress-fill" style="width: 25%; background: var(--purple-accent);"></div>
+                    </div>
                     <span class="bar-value">6 hrs / 25%</span>
                   </div>
                   <div class="progress-bar-container">
                     <span class="bar-label">Study (Golden Morning Hours)</span>
-                    <div class="progress-track"><div class="progress-fill" id="study-progress-fill" style="width: 8%; background: var(--teal-accent);"></div></div>
+                    <div class="progress-track">
+                      <div class="progress-fill" id="study-progress-fill"
+                        style="width: 8%; background: var(--teal-accent);"></div>
+                    </div>
                     <span class="bar-value">2 hrs / 8%</span>
                   </div>
                   <div class="progress-bar-container">
                     <span class="bar-label">Work Night Shift (Productivity Peak)</span>
-                    <div class="progress-track"><div class="progress-fill" style="width: 50%; background: var(--gold-accent);"></div></div>
+                    <div class="progress-track">
+                      <div class="progress-fill" style="width: 50%; background: var(--gold-accent);"></div>
+                    </div>
                     <span class="bar-value">12 hrs / 50%</span>
                   </div>
                 </div>
@@ -119,8 +130,10 @@
                 <h3>Preparation Checklist Progress</h3>
                 <div class="overall-progress-circle">
                   <svg viewBox="0 0 36 36" class="circular-chart rose">
-                    <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                    <path class="circle" id="overall-chart-circle" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                    <path class="circle-bg"
+                      d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                    <path class="circle" id="overall-chart-circle" stroke-dasharray="0, 100"
+                      d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
                     <text x="18" y="20.35" class="percentage" id="overall-percentage-text">0%</text>
                   </svg>
                 </div>
@@ -179,27 +192,30 @@
       <!-- TAB 2: DAILY BALANCE SCHEDULE -->
       <section id="schedule" class="tab-panel">
         <div class="grid-layout cols-1-2">
-          
+
           <!-- Column 1: Interactive 24-Hour dial -->
           <div class="card dial-card">
             <h3>Visual 24-Hour Balance Dial</h3>
             <p class="card-sub text-center">Click a segment to read Lorraine's secret note for that hour</p>
-            
+
             <div class="dial-container">
               <!-- Custom interactive circular schedule SVG -->
               <svg viewBox="0 0 200 200" id="schedule-svg-dial">
-                <circle cx="100" cy="100" r="90" fill="transparent" stroke="rgba(255, 255, 255, 0.05)" stroke-width="12" />
+                <circle cx="100" cy="100" r="90" fill="transparent" stroke="rgba(255, 255, 255, 0.05)"
+                  stroke-width="12" />
                 <!-- Dynamic sectors will be injected here by Javascript -->
-                
+
                 <!-- Inner Clock Details -->
                 <circle cx="100" cy="100" r="58" fill="var(--card-bg)" />
                 <g class="dial-center-content">
-                  <text x="100" y="95" text-anchor="middle" class="dial-center-label" fill="rgba(255,255,255,0.4)">SELECTED</text>
-                  <text x="100" y="115" text-anchor="middle" id="dial-center-title" class="dial-center-value" fill="var(--rose-accent)">Select Segment</text>
+                  <text x="100" y="95" text-anchor="middle" class="dial-center-label"
+                    fill="rgba(255,255,255,0.4)">SELECTED</text>
+                  <text x="100" y="115" text-anchor="middle" id="dial-center-title" class="dial-center-value"
+                    fill="var(--rose-accent)">Select Segment</text>
                 </g>
               </svg>
             </div>
-            
+
             <div class="schedule-legend">
               <span class="legend-item"><span class="color-box" style="background:#A29BFE"></span> Sleep</span>
               <span class="legend-item"><span class="color-box" style="background:#FFEAA7"></span> Prep</span>
@@ -244,7 +260,8 @@
       <section id="units" class="tab-panel">
         <div class="units-header-card card">
           <h2>Higher Diploma Syllabus Track</h2>
-          <p>Four key units. Check off subtopics as you complete them to dynamically update your progress. You've got this, champion!</p>
+          <p>Four key units. Check off subtopics as you complete them to dynamically update your progress. You've got
+            this, champion!</p>
         </div>
 
         <div class="units-grid" id="units-container">
@@ -255,7 +272,7 @@
       <!-- TAB 4: POMODORO COMPANION -->
       <section id="timer" class="tab-panel">
         <div class="grid-layout cols-2-1">
-          
+
           <!-- Column 1: Main Timer -->
           <div class="card timer-card flex-center-col">
             <div class="timer-modes">
@@ -263,7 +280,7 @@
               <button class="timer-mode-btn" data-time="3000" data-mode="sprint">🚀 Night Focus (50m)</button>
               <button class="timer-mode-btn" data-time="300" data-mode="break">💋 Sweet Break (5m)</button>
             </div>
-            
+
             <div class="timer-display-wrapper">
               <!-- Vinyl record overlay rotating during timer -->
               <div class="vinyl-record-container" id="vinyl-disc">
@@ -272,7 +289,7 @@
                   <div class="vinyl-heart">❤️</div>
                 </div>
               </div>
-              
+
               <!-- Timer Digits -->
               <div class="timer-digits" id="timer-digits">25:00</div>
             </div>
@@ -303,7 +320,8 @@
               <div class="card-header-icon">💝</div>
               <h3>Lorraine's Study Whispers</h3>
               <div class="whisper-content">
-                <p id="timer-whisper">"Drink a glass of water, you handsome engineer. Put your feet up for five minutes, you've earned it."</p>
+                <p id="timer-whisper">"Drink a glass of water, you handsome engineer. Put your feet up for five minutes,
+                  you've earned it."</p>
               </div>
               <button class="card-action-btn" id="next-whisper-btn">New whisper please ✨</button>
             </div>
@@ -331,7 +349,8 @@
       <section id="vault" class="tab-panel">
         <div class="vault-welcome-card card">
           <h2>🔒 The Love Vault</h2>
-          <p>A collection of special letters and motivation from Lorraine, tailored to match whatever mood you're in. Open one whenever you need an extra lift.</p>
+          <p>A collection of special letters and motivation from Lorraine, tailored to match whatever mood you're in.
+            Open one whenever you need an extra lift.</p>
         </div>
 
         <div class="grid-layout cols-2-1">
@@ -339,7 +358,7 @@
           <div class="card letters-card">
             <h3>Open a Letter Based on Your Mood</h3>
             <div class="mood-letter-grid">
-              
+
               <div class="mood-envelope" data-mood="stressed">
                 <div class="envelope-back"></div>
                 <div class="envelope-paper">
@@ -388,9 +407,11 @@
             <div class="card journal-card">
               <h3>Dennis's Study & Reflection Log</h3>
               <p class="card-sub">Leave your thoughts, achievements, or a message back to Lorraine below</p>
-              
+
               <form id="journal-form" class="journal-form">
-                <textarea id="journal-input" placeholder="Today was tough but I got GBC section 2 done... Lorraine, I love you!" required></textarea>
+                <textarea id="journal-input"
+                  placeholder="Today was tough but I got GBC section 2 done... Lorraine, I love you!"
+                  required></textarea>
                 <button type="submit" class="submit-journal-btn">Lock Reflection in Vault 🔒</button>
               </form>
 
@@ -444,4 +465,5 @@
   <script src="content.js"></script>
   <script src="app.js"></script>
 </body>
+
 </html>
