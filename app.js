@@ -44,6 +44,11 @@ function updateDaysTogether() {
   if (element) {
     element.textContent = `${diffDays} Beautiful Days Together`;
   }
+  
+  const headerVal = document.getElementById("days-together-val-header");
+  if (headerVal) {
+    headerVal.textContent = `${diffDays} Days`;
+  }
 }
 
 // Check study streak

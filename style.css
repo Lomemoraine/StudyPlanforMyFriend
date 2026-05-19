@@ -235,6 +235,12 @@ html, body {
   box-shadow: 0 0 10px rgba(255, 107, 139, 0.05);
 }
 
+.days-together-badge {
+  display: none;
+  border-color: rgba(255, 107, 139, 0.3);
+  box-shadow: 0 0 10px rgba(255, 107, 139, 0.05);
+}
+
 /* ==========================================================================
    Reusable Card Modules (Glassmorphism)
    ========================================================================== */
@@ -1677,67 +1683,279 @@ html, body {
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 768px) {
   .app-container {
     flex-direction: column;
   }
-  
+
+  /* Transform Sidebar into a Premium Bottom Navigation Bar */
   .sidebar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: auto;
+    height: 70px;
     width: 100%;
-    height: auto;
-    position: relative;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    background: rgba(10, 5, 20, 0.95);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    padding: 5px 10px;
     border-right: none;
-    border-bottom: 1px solid var(--border-rose-gold);
-    padding: 20px;
+    border-top: 1.5px solid rgba(212, 175, 55, 0.2);
+    border-bottom: none;
+    z-index: 999;
+    box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.6);
+    border-radius: 0;
   }
-  
+
+  .sidebar-header, 
+  .sidebar-footer {
+    display: none;
+  }
+
   .nav-menu {
     flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+    gap: 0;
+    margin-top: 0;
+    flex-grow: 0;
+  }
+
+  .nav-btn {
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 6px 2px;
+    font-size: 0.65rem;
+    text-align: center;
+    border: none;
+    background: transparent;
+    border-radius: 0;
+    color: var(--text-muted);
+    font-weight: 500;
+    transform: none !important;
+  }
+
+  .nav-btn:hover {
+    background: transparent;
+    border-color: transparent;
+  }
+
+  .nav-btn.active {
+    color: var(--rose-accent);
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    font-weight: 600;
+    text-shadow: 0 0 10px rgba(255, 107, 139, 0.4);
+    border-bottom: 2.5px solid var(--rose-accent);
+  }
+
+  .nav-icon {
+    font-size: 1.3rem;
+    margin: 0;
+  }
+
+  /* Main Content Adaptations */
+  .main-content {
+    width: 100%;
+    padding: 20px 15px 95px 15px; /* Added bottom padding to not get covered by bottom nav */
+  }
+
+  /* Top Header Elements formatting */
+  .top-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 15px;
+    padding-bottom: 15px;
+  }
+
+  .header-greet h2 {
+    font-size: 1.65rem;
+  }
+
+  .header-status {
     flex-wrap: wrap;
     justify-content: center;
     gap: 8px;
-    margin-top: 15px;
-  }
-  
-  .nav-btn {
-    padding: 10px 14px;
-    font-size: 0.85rem;
-  }
-  
-  .main-content {
     width: 100%;
-    padding: 20px;
   }
-  
-  .top-header {
-    flex-direction: column;
-    align-items: flex-start;
+
+  .status-badge {
+    padding: 8px 12px;
+    font-size: 0.75rem;
+  }
+
+  .days-together-badge {
+    display: flex !important; /* Make sure it shows on mobile */
+  }
+
+  /* Layout and cards grids */
+  .grid-layout.cols-2-1,
+  .grid-layout.cols-1-2 {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .inner-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .units-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .dial-container {
+    max-width: 240px;
+    margin: 10px auto;
+  }
+
+  .mood-letter-grid {
+    grid-template-columns: 1fr 1fr;
     gap: 15px;
   }
 }
 
-@media (max-width: 600px) {
-  .mood-letter-grid {
-    grid-template-columns: 1fr;
+@media (max-width: 480px) {
+  /* Ultra Mobile Adjustments */
+  .header-greet h2 {
+    font-size: 1.4rem;
   }
+
+  .header-greet p {
+    font-size: 0.8rem;
+  }
+
+  .status-badge {
+    padding: 6px 10px;
+    font-size: 0.7rem;
+  }
+
+  .romantic-hero-card {
+    min-height: auto;
+    padding: 16px;
+  }
+
+  .romantic-hero-card h3 {
+    font-size: 1.25rem;
+  }
+
+  .romantic-body {
+    font-size: 0.85rem;
+    padding-left: 10px;
+  }
+
+  /* Countdowns */
   .countdown-display {
     gap: 8px;
   }
+
   .countdown-time-block {
-    min-width: 60px;
+    min-width: 58px;
     padding: 8px 4px;
   }
+
   .countdown-time-block .num {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
   }
-  .units-grid {
+
+  .countdown-time-block .lbl {
+    font-size: 0.6rem;
+  }
+
+  /* Mood Letters */
+  .mood-letter-grid {
     grid-template-columns: 1fr;
+    gap: 12px;
   }
+
+  .mood-envelope {
+    height: 120px;
+    padding: 12px;
+  }
+
+  .envelope-seal {
+    top: 40px;
+  }
+
+  /* Focus Companion */
+  .timer-card {
+    min-height: auto;
+    padding: 16px;
+  }
+
+  .timer-display-wrapper {
+    width: 170px;
+    height: 170px;
+    margin-bottom: 20px;
+  }
+
+  .timer-digits {
+    font-size: 2.6rem;
+    padding: 4px 14px;
+  }
+
+  .timer-btn-control {
+    padding: 10px 20px;
+    font-size: 0.85rem;
+  }
+
   .sound-selectors {
     gap: 4px;
   }
+
   .sound-btn {
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     padding: 4px 8px;
+  }
+
+  /* Reflective Form */
+  .journal-form textarea {
+    height: 80px;
+    font-size: 0.8rem;
+  }
+
+  /* Popups and Overlays */
+  .dialog-card {
+    padding: 20px;
+  }
+
+  .dialog-title {
+    font-size: 1.15rem;
+  }
+
+  .romantic-blockquote {
+    font-size: 1rem;
+  }
+
+  .letter-parchment {
+    max-width: 95%;
+    padding: 20px;
+  }
+
+  .letter-parchment h3 {
+    font-size: 1.2rem;
+  }
+
+  .letter-body {
+    font-size: 0.9rem;
+  }
+
+  .letter-stamp {
+    top: 15px;
+    right: 15px;
+    width: 32px;
+    height: 32px;
+    font-size: 0.95rem;
   }
 }
