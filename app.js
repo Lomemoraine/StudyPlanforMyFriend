@@ -152,7 +152,7 @@ function startClockAndGreeting() {
     } else {
       // Work Night Shift 3pm - 3am
       greetTitle = "Night Shift Hustle! 💼";
-      subGreet = "You are working so hard for our dreams. Stay strong, champion.";
+      subGreet = "You are working so hard for your dreams. Stay strong, champion.";
       greetingCategory = "evening";
     }
 
@@ -865,7 +865,7 @@ function setupLoveTokens() {
   document.getElementById("token-shift").addEventListener("click", () => {
     alertLoveTokenPopup(
       "🦉 Midnight Shift Fuel!",
-      "Working 3 PM to 3 AM takes elite strength! Here is a cup of cozy motivation. Stay sharp, stay safe on your way home, and remember I'll be waiting to kiss you in the morning! I'm so proud of your dedication.",
+      "Working 3 PM to 3 AM takes elite strength! Here is a cup of cozy motivation. Stay sharp, stay safe, and remember I'll be waiting to kiss you when I see you! I'm so proud of your dedication.",
       "☕"
     );
   });
