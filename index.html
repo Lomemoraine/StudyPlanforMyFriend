@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To Dennis, My Love - Study & Life Planner</title>
+  
+  <!-- Google Fonts for Romance and Modernity -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Floating Hearts Overlay Container -->
+  <div id="hearts-container"></div>
+
+  <!-- Main App Layout -->
+  <div class="app-container">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="love-heart-pulse">❤️</div>
+        <h1>Dennis & Lorraine</h1>
+        <p class="subtitle">Our Journey to July & Beyond</p>
+      </div>
+      
+      <nav class="nav-menu">
+        <button class="nav-btn active" data-tab="dashboard">
+          <span class="nav-icon">✨</span> Dashboard
+        </button>
+        <button class="nav-btn" data-tab="schedule">
+          <span class="nav-icon">⏰</span> Daily Balance
+        </button>
+        <button class="nav-btn" data-tab="units">
+          <span class="nav-icon">📚</span> Study Units
+        </button>
+        <button class="nav-btn" data-tab="timer">
+          <span class="nav-icon">⏱️</span> Focus Companion
+        </button>
+        <button class="nav-btn" data-tab="vault">
+          <span class="nav-icon">🔒</span> Love Vault
+        </button>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <p>Made with ❤️ by Lorraine</p>
+        <p class="days-together" id="days-together-counter">Loading our days...</p>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      
+      <!-- HEADER -->
+      <header class="top-header">
+        <div class="header-greet">
+          <h2 id="time-greeting">Hello, Dennis</h2>
+          <p id="sub-greeting">Thinking of you right now.</p>
+        </div>
+        <div class="header-status">
+          <div class="status-badge study-streak">
+            <span>🔥</span> <span id="streak-count">0</span> Day Study Streak
+          </div>
+          <div class="status-badge current-time-badge">
+            <span>🕒</span> <span id="local-time-clock">00:00 AM</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- TAB 1: DASHBOARD -->
+      <section id="dashboard" class="tab-panel active">
+        <div class="grid-layout cols-2-1">
+          
+          <!-- Column 1: Main Overview -->
+          <div class="panel-column">
+            <!-- Romantic Greeting Card -->
+            <div class="card romantic-hero-card">
+              <div class="hero-card-pattern"></div>
+              <div class="hero-content">
+                <span class="tag">Lorraine's Daily Love Note</span>
+                <h3 id="hero-quote">"You are my favorite notification in a busy day. 💕"</h3>
+                <p id="hero-message" class="romantic-body">Loading your custom daily message to cheer you up...</p>
+                <div class="hero-signature">— Always & Forever, Lorraine</div>
+              </div>
+            </div>
+
+            <!-- Double Card Grid -->
+            <div class="inner-grid">
+              <!-- Today's Balance Quick Look -->
+              <div class="card status-overview-card">
+                <h3>Today's Balance Focus</h3>
+                <div class="balance-visual-small">
+                  <div class="progress-bar-container">
+                    <span class="bar-label">Sleep (Rest Recharge)</span>
+                    <div class="progress-track"><div class="progress-fill" style="width: 25%; background: var(--purple-accent);"></div></div>
+                    <span class="bar-value">6 hrs / 25%</span>
+                  </div>
+                  <div class="progress-bar-container">
+                    <span class="bar-label">Study (Golden Morning Hours)</span>
+                    <div class="progress-track"><div class="progress-fill" id="study-progress-fill" style="width: 8%; background: var(--teal-accent);"></div></div>
+                    <span class="bar-value">2 hrs / 8%</span>
+                  </div>
+                  <div class="progress-bar-container">
+                    <span class="bar-label">Work Night Shift (Productivity Peak)</span>
+                    <div class="progress-track"><div class="progress-fill" style="width: 50%; background: var(--gold-accent);"></div></div>
+                    <span class="bar-value">12 hrs / 50%</span>
+                  </div>
+                </div>
+                <button class="card-action-btn" onclick="switchTab('schedule')">Review Visual Schedule →</button>
+              </div>
+
+              <!-- Quick Progress Card -->
+              <div class="card study-summary-card">
+                <h3>Preparation Checklist Progress</h3>
+                <div class="overall-progress-circle">
+                  <svg viewBox="0 0 36 36" class="circular-chart rose">
+                    <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                    <path class="circle" id="overall-chart-circle" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                    <text x="18" y="20.35" class="percentage" id="overall-percentage-text">0%</text>
+                  </svg>
+                </div>
+                <p class="summary-text" id="overall-topics-summary">0 out of 25 subtopics completed.</p>
+                <button class="card-action-btn" onclick="switchTab('units')">Study Subtopics →</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Column 2: Countdowns & Love tokens -->
+          <div class="panel-column">
+            <!-- Exam Countdown -->
+            <div class="card countdown-card">
+              <h3>Countdown to July Exams</h3>
+              <div class="countdown-display" id="countdown-display">
+                <div class="countdown-time-block">
+                  <span class="num" id="cd-days">00</span>
+                  <span class="lbl">Days</span>
+                </div>
+                <div class="countdown-time-block">
+                  <span class="num" id="cd-hours">00</span>
+                  <span class="lbl">Hrs</span>
+                </div>
+                <div class="countdown-time-block">
+                  <span class="num" id="cd-mins">00</span>
+                  <span class="lbl">Mins</span>
+                </div>
+              </div>
+              <div class="countdown-footer" id="countdown-footer-msg">Dennis's Higher Diploma Milestone</div>
+            </div>
+
+            <!-- Virtual Support tokens -->
+            <div class="card love-tokens-card">
+              <h3>Lorraine's Support Boosts</h3>
+              <p class="card-sub">Click for instantaneous sweet vibes and custom boosters</p>
+              <div class="token-buttons">
+                <button class="token-btn" id="token-kiss">
+                  <span class="token-icon">💋</span>
+                  <span class="token-label">Virtual Kiss</span>
+                </button>
+                <button class="token-btn" id="token-motivation">
+                  <span class="token-icon">💌</span>
+                  <span class="token-label">Emergency Hug</span>
+                </button>
+                <button class="token-btn" id="token-shift">
+                  <span class="token-icon">🦉</span>
+                  <span class="token-label">Night Shift fuel</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- TAB 2: DAILY BALANCE SCHEDULE -->
+      <section id="schedule" class="tab-panel">
+        <div class="grid-layout cols-1-2">
+          
+          <!-- Column 1: Interactive 24-Hour dial -->
+          <div class="card dial-card">
+            <h3>Visual 24-Hour Balance Dial</h3>
+            <p class="card-sub text-center">Click a segment to read Lorraine's secret note for that hour</p>
+            
+            <div class="dial-container">
+              <!-- Custom interactive circular schedule SVG -->
+              <svg viewBox="0 0 200 200" id="schedule-svg-dial">
+                <circle cx="100" cy="100" r="90" fill="transparent" stroke="rgba(255, 255, 255, 0.05)" stroke-width="12" />
+                <!-- Dynamic sectors will be injected here by Javascript -->
+                
+                <!-- Inner Clock Details -->
+                <circle cx="100" cy="100" r="58" fill="var(--card-bg)" />
+                <g class="dial-center-content">
+                  <text x="100" y="95" text-anchor="middle" class="dial-center-label" fill="rgba(255,255,255,0.4)">SELECTED</text>
+                  <text x="100" y="115" text-anchor="middle" id="dial-center-title" class="dial-center-value" fill="var(--rose-accent)">Select Segment</text>
+                </g>
+              </svg>
+            </div>
+            
+            <div class="schedule-legend">
+              <span class="legend-item"><span class="color-box" style="background:#A29BFE"></span> Sleep</span>
+              <span class="legend-item"><span class="color-box" style="background:#FFEAA7"></span> Prep</span>
+              <span class="legend-item"><span class="color-box" style="background:#70E6D2"></span> Study</span>
+              <span class="legend-item"><span class="color-box" style="background:#FF6B8B"></span> Rest/Love</span>
+              <span class="legend-item"><span class="color-box" style="background:#D4AF37"></span> Work</span>
+            </div>
+          </div>
+
+          <!-- Column 2: Detailed Segment Info & Day Checklist -->
+          <div class="panel-column">
+            <!-- Selected block details -->
+            <div class="card schedule-details-card" id="schedule-details-box">
+              <div class="schedule-details-header">
+                <span class="details-icon" id="detail-icon">😴</span>
+                <div>
+                  <h3 id="detail-title">Deep Sleep & Rest</h3>
+                  <p class="details-time" id="detail-time">03:30 AM - 09:30 AM (6 Hours)</p>
+                </div>
+              </div>
+              <div class="details-body">
+                <blockquote class="romantic-blockquote" id="detail-romantic-note">
+                  "Sleep tight, my prince. Let your brain recharge from the heavy shift. Dreaming of you!"
+                </blockquote>
+                <div class="timeline-indicator-tag" id="detail-tag">RECOVERY MODE</div>
+              </div>
+            </div>
+
+            <!-- Complete Day Timeline Checklist -->
+            <div class="card timeline-card">
+              <h3>Dennis's Balanced Day Routine</h3>
+              <div class="timeline-flow" id="timeline-flow-list">
+                <!-- Javascript will inject list of schedule steps -->
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- TAB 3: STUDY UNITS -->
+      <section id="units" class="tab-panel">
+        <div class="units-header-card card">
+          <h2>Higher Diploma Syllabus Track</h2>
+          <p>Four key units. Check off subtopics as you complete them to dynamically update your progress. You've got this, champion!</p>
+        </div>
+
+        <div class="units-grid" id="units-container">
+          <!-- Study Units injected here -->
+        </div>
+      </section>
+
+      <!-- TAB 4: POMODORO COMPANION -->
+      <section id="timer" class="tab-panel">
+        <div class="grid-layout cols-2-1">
+          
+          <!-- Column 1: Main Timer -->
+          <div class="card timer-card flex-center-col">
+            <div class="timer-modes">
+              <button class="timer-mode-btn active" data-time="1500" data-mode="study">✏️ Golden Study (25m)</button>
+              <button class="timer-mode-btn" data-time="3000" data-mode="sprint">🚀 Night Focus (50m)</button>
+              <button class="timer-mode-btn" data-time="300" data-mode="break">💋 Sweet Break (5m)</button>
+            </div>
+            
+            <div class="timer-display-wrapper">
+              <!-- Vinyl record overlay rotating during timer -->
+              <div class="vinyl-record-container" id="vinyl-disc">
+                <div class="vinyl-grooves"></div>
+                <div class="vinyl-center">
+                  <div class="vinyl-heart">❤️</div>
+                </div>
+              </div>
+              
+              <!-- Timer Digits -->
+              <div class="timer-digits" id="timer-digits">25:00</div>
+            </div>
+
+            <div class="timer-controls">
+              <button class="timer-btn-control btn-play" id="btn-timer-start">Start</button>
+              <button class="timer-btn-control btn-pause" id="btn-timer-pause" disabled>Pause</button>
+              <button class="timer-btn-control btn-reset" id="btn-timer-reset">Reset</button>
+            </div>
+
+            <!-- Ambient Sound Synth Player -->
+            <div class="ambient-sound-synthesizer">
+              <span class="ambient-label">Ambient Sound Wave:</span>
+              <div class="sound-selectors">
+                <button class="sound-btn active" data-synth="none">🔇 Muted</button>
+                <button class="sound-btn" data-synth="lofi">🎹 Cozy Lofi Synth</button>
+                <button class="sound-btn" data-synth="rain">🌧️ Warm Rain Synth</button>
+                <button class="sound-btn" data-synth="waves">🌊 Deep Ocean Waves</button>
+              </div>
+              <p class="synth-indicator" id="synth-status">Synthesizing audio frequencies locally...</p>
+            </div>
+          </div>
+
+          <!-- Column 2: Lorraine's Live Encouragement -->
+          <div class="panel-column">
+            <!-- Whisper board -->
+            <div class="card whispers-card">
+              <div class="card-header-icon">💝</div>
+              <h3>Lorraine's Study Whispers</h3>
+              <div class="whisper-content">
+                <p id="timer-whisper">"Drink a glass of water, you handsome engineer. Put your feet up for five minutes, you've earned it."</p>
+              </div>
+              <button class="card-action-btn" id="next-whisper-btn">New whisper please ✨</button>
+            </div>
+
+            <!-- Study statistics -->
+            <div class="card focus-stats-card">
+              <h3>Today's Study Stats</h3>
+              <div class="stats-grid">
+                <div class="stat-box">
+                  <span class="stat-num" id="stat-sessions">0</span>
+                  <span class="stat-lbl">Sessions Completed</span>
+                </div>
+                <div class="stat-box">
+                  <span class="stat-num" id="stat-minutes">0</span>
+                  <span class="stat-lbl">Minutes Ticked</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- TAB 5: LOVE VAULT -->
+      <section id="vault" class="tab-panel">
+        <div class="vault-welcome-card card">
+          <h2>🔒 The Love Vault</h2>
+          <p>A collection of special letters and motivation from Lorraine, tailored to match whatever mood you're in. Open one whenever you need an extra lift.</p>
+        </div>
+
+        <div class="grid-layout cols-2-1">
+          <!-- Column 1: Interactive mood based letters -->
+          <div class="card letters-card">
+            <h3>Open a Letter Based on Your Mood</h3>
+            <div class="mood-letter-grid">
+              
+              <div class="mood-envelope" data-mood="stressed">
+                <div class="envelope-back"></div>
+                <div class="envelope-paper">
+                  <h4>When You're Stressed 😰</h4>
+                  <p>Read me when the load feels heavy.</p>
+                </div>
+                <div class="envelope-front"></div>
+                <div class="envelope-seal">💖</div>
+              </div>
+
+              <div class="mood-envelope" data-mood="tired">
+                <div class="envelope-back"></div>
+                <div class="envelope-paper">
+                  <h4>When You're Tired at 2 AM 🌙</h4>
+                  <p>A midnight fuel of sweet words.</p>
+                </div>
+                <div class="envelope-front"></div>
+                <div class="envelope-seal">💖</div>
+              </div>
+
+              <div class="mood-envelope" data-mood="givingup">
+                <div class="envelope-back"></div>
+                <div class="envelope-paper">
+                  <h4>When You Feel Like Giving Up 🥺</h4>
+                  <p>Reminding you of your inner giant.</p>
+                </div>
+                <div class="envelope-front"></div>
+                <div class="envelope-seal">💖</div>
+              </div>
+
+              <div class="mood-envelope" data-mood="missingme">
+                <div class="envelope-back"></div>
+                <div class="envelope-paper">
+                  <h4>When You Miss Me 👩‍❤️‍👨</h4>
+                  <p>Bringing our hearts close together.</p>
+                </div>
+                <div class="envelope-front"></div>
+                <div class="envelope-seal">💖</div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Column 2: Interactive Reflection Journal -->
+          <div class="panel-column">
+            <div class="card journal-card">
+              <h3>Dennis's Study & Reflection Log</h3>
+              <p class="card-sub">Leave your thoughts, achievements, or a message back to Lorraine below</p>
+              
+              <form id="journal-form" class="journal-form">
+                <textarea id="journal-input" placeholder="Today was tough but I got GBC section 2 done... Lorraine, I love you!" required></textarea>
+                <button type="submit" class="submit-journal-btn">Lock Reflection in Vault 🔒</button>
+              </form>
+
+              <div class="reflection-history">
+                <h4>Past Locked Reflections</h4>
+                <div class="reflections-list" id="reflections-list-container">
+                  <p class="no-logs">No reflections written yet. Start your journey!</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- POPUP DIALOGS -->
+  <!-- Love Token popup -->
+  <div class="overlay-dialog-wrapper" id="token-dialog-overlay">
+    <div class="dialog-card card">
+      <button class="dialog-close" id="token-dialog-close">×</button>
+      <div class="dialog-icon" id="token-dialog-icon">💋</div>
+      <h3 class="dialog-title" id="token-dialog-title">Virtual Kiss Sent!</h3>
+      <div class="dialog-body">
+        <blockquote class="romantic-blockquote" id="token-dialog-message">
+          "Sending you a million soft kisses..."
+        </blockquote>
+      </div>
+      <button class="dialog-btn" id="token-dialog-btn">Love You!</button>
+    </div>
+  </div>
+
+  <!-- Mood Letter popup -->
+  <div class="overlay-dialog-wrapper" id="letter-dialog-overlay">
+    <div class="dialog-card letter-parchment card">
+      <button class="dialog-close" id="letter-dialog-close">×</button>
+      <div class="letter-stamp">❤️</div>
+      <h3 class="letter-title" id="letter-dialog-title">Letter Title</h3>
+      <div class="letter-body" id="letter-dialog-body">
+        <!-- Injected text -->
+      </div>
+      <div class="letter-signature">
+        Always and forever your cheerleader,<br>
+        <strong>Lorraine</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- Application Logic Scripts -->
+  <script src="content.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
