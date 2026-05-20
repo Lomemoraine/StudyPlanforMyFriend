@@ -1968,4 +1968,202 @@ html, body {
   }
 }
 
+/* Dennis's Love Alarms Reminders Styling */
+.reminders-card {
+  background: linear-gradient(135deg, rgba(40, 20, 45, 0.5) 0%, rgba(20, 10, 25, 0.75) 100%);
+  border-color: rgba(255, 107, 139, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.reminders-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.reminders-icon {
+  font-size: 2.2rem;
+  background: rgba(255, 255, 255, 0.03);
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 107, 139, 0.25);
+  box-shadow: 0 0 10px rgba(255, 107, 139, 0.1);
+  animation: pulse-glow 2s infinite alternate;
+}
+
+.reminders-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.reminders-desc {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.reminder-status-badge {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 10px;
+  background: rgba(112, 230, 210, 0.1);
+  border: 1.5px solid var(--teal-accent);
+  color: var(--teal-accent);
+  text-shadow: 0 0 5px rgba(112, 230, 210, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.reminder-status-badge.native {
+  background: rgba(212, 175, 55, 0.1);
+  border-color: var(--gold-accent);
+  color: var(--gold-light);
+}
+
+.reminder-permission-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.permission-status {
+  font-size: 0.8rem;
+  color: var(--text-main);
+}
+
+.permission-status strong {
+  margin-left: 4px;
+}
+
+.permission-status strong.perm-granted {
+  color: var(--teal-accent);
+}
+
+.permission-status strong.perm-denied {
+  color: var(--rose-accent);
+}
+
+.action-mini-btn {
+  background: rgba(255, 107, 139, 0.1);
+  border: 1.5px solid var(--rose-accent);
+  color: var(--rose-light);
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.action-mini-btn:hover {
+  background: var(--rose-accent);
+  color: #fff;
+  box-shadow: 0 0 10px var(--rose-glow);
+}
+
+.reminder-toggle-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.15);
+  padding: 12px 14px;
+  border-radius: 8px;
+}
+
+.toggle-label-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.toggle-label-group strong {
+  font-size: 0.85rem;
+  color: var(--text-main);
+}
+
+.toggle-sub {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* Beautiful iOS pink switch slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 46px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: .3s;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 3px;
+  bottom: 3px;
+  background-color: var(--text-muted);
+  transition: .3s;
+}
+
+input:checked + .slider {
+  background-color: rgba(255, 107, 139, 0.2);
+  border-color: var(--rose-accent);
+}
+
+input:checked + .slider:before {
+  background-color: var(--rose-accent);
+  box-shadow: 0 0 6px var(--rose-accent);
+}
+
+input:checked + .slider:before {
+  transform: translateX(22px);
+}
+
+.slider.round {
+  border-radius: 24px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.reminder-test-btn {
+  width: 100%;
+  margin-top: 4px;
+}
+
 /* Force redeploy trigger */

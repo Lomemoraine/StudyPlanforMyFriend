@@ -18,6 +18,13 @@
 
   <!-- Lovely Heart Favicon -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💖</text></svg>">
+
+  <!-- Progressive Web App Manifest -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#FF6B8B">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="icon.png">
 </head>
 
 <body>
@@ -247,6 +254,51 @@
                   "Sleep tight, my prince. Let your brain recharge from the heavy shift. Dreaming of you!"
                 </blockquote>
                 <div class="timeline-indicator-tag" id="detail-tag">RECOVERY MODE</div>
+              </div>
+            </div>
+
+            <!-- Dennis's Alarm Reminders Card -->
+            <div class="card reminders-card">
+              <div class="reminders-header">
+                <span class="reminders-icon">⏰</span>
+                <div>
+                  <h3>Dennis's Love Alarms</h3>
+                  <p class="card-sub">Lorraine's supportive background reminders</p>
+                </div>
+              </div>
+              <div class="reminders-body">
+                <p class="reminders-desc">
+                  Enable these occasional scheduled reminders so Lorraine can whisper love, motivation, and schedule guidance to your phone in the background.
+                </p>
+                
+                <div class="reminder-status-badge" id="reminder-app-type">
+                  PWA Web Mode (Active)
+                </div>
+
+                <div class="reminder-permission-group">
+                  <div class="permission-status">
+                    <span>Notifications:</span>
+                    <strong id="permission-label" class="perm-denied">Disabled</strong>
+                  </div>
+                  <button class="action-mini-btn" id="btn-request-permission">Grant Access 🔔</button>
+                </div>
+
+                <div class="reminder-toggle-container">
+                  <div class="toggle-label-group">
+                    <strong>Schedule Reminders</strong>
+                    <span class="toggle-sub">Trigger alarms at routine intervals</span>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" id="toggle-reminders">
+                    <span class="slider round"></span>
+                  </label>
+                </div>
+
+                <div class="reminder-test-group">
+                  <button class="card-action-btn reminder-test-btn" id="btn-test-reminder">
+                    Send Test Reminder Instantly 💋
+                  </button>
+                </div>
               </div>
             </div>
 

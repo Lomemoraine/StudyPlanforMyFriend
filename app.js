@@ -10,7 +10,8 @@ const defaultState = {
   studyStreak: 1,      // initial streak
   sessionsCompleted: 0,
   minutesTicked: 0,
-  lastActiveDate: ""   // for calculating streak
+  lastActiveDate: "",  // for calculating streak
+  remindersEnabled: false // reminders toggle state
 };
 
 let state = { ...defaultState };
@@ -1023,6 +1024,323 @@ function setupJournalForm() {
 }
 
 // ==========================================================================
+// MOBILE ALARMS & SUPPORTIVE REMINDERS ENGINE (PWA & CAPACITOR)
+// ==========================================================================
+
+const REMINDER_ALARMS = [
+  {
+    id: 1,
+    title: "Sweet Dreams, Dennis 😴",
+    body: "Time to rest your beautiful mind after that heavy night shift. Lorraine is sleeping next to you in spirit! 💕",
+    hour: 3,
+    minute: 30
+  },
+  {
+    id: 2,
+    title: "Good Morning, Handsome! ☕",
+    body: "Wake up, stretch, and get a warm cup of coffee. Sending you a big warm hug to start your day!",
+    hour: 9,
+    minute: 30
+  },
+  {
+    id: 3,
+    title: "Golden Focus Hour! 🧠",
+    body: "It's 10:00 AM! Your superpower study time is here. Let's block out distractions and conquer drawing/GBC!",
+    hour: 10,
+    minute: 0
+  },
+  {
+    id: 4,
+    title: "Lunch, Rest & Connection! 💖",
+    body: "Study session finished! Time to eat something delicious, relax, and message your biggest fan (me!).",
+    hour: 12,
+    minute: 0
+  },
+  {
+    id: 5,
+    title: "Transition to Hype Mode! 🚶‍♂️",
+    body: "Time to pack your bags, listen to some energetic music, and get ready for a stellar work shift!",
+    hour: 14,
+    minute: 30
+  },
+  {
+    id: 6,
+    title: "Night Shift Hustle! 💼",
+    body: "Your demanding shift starts now. I'm so proud of your dedication and capabilities, my hard-working engineer!",
+    hour: 15,
+    minute: 0
+  },
+  {
+    id: 7,
+    title: "Shift Finished! 🌙",
+    body: "You survived! Wash your face, stretch gently, and let's get ready for a cozy, peaceful sleep. Sweet dreams!",
+    hour: 3,
+    minute: 0
+  }
+];
+
+let browserAlarmsInterval = null;
+let lastTriggeredMinutes = -1;
+
+function registerServiceWorker() {
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("sw.js")
+      .then((reg) => console.log("[PWA SW] Registered successfully with scope:", reg.scope))
+      .catch((err) => console.error("[PWA SW] Registration failed:", err));
+  }
+}
+
+function updatePermissionUI(status) {
+  const label = document.getElementById("permission-label");
+  const btn = document.getElementById("btn-request-permission");
+  if (!label) return;
+
+  if (status === "granted") {
+    label.textContent = "Authorized 💖";
+    label.className = "perm-granted";
+    if (btn) btn.style.display = "none";
+  } else if (status === "denied") {
+    label.textContent = "Blocked ❌";
+    label.className = "perm-denied";
+    if (btn) btn.style.display = "inline-block";
+  } else {
+    label.textContent = "Not Granted";
+    label.className = "perm-denied";
+    if (btn) btn.style.display = "inline-block";
+  }
+}
+
+async function checkNotificationPermission() {
+  if (window.Capacitor && window.Capacitor.Plugins.LocalNotifications) {
+    const { LocalNotifications } = window.Capacitor.Plugins;
+    const status = await LocalNotifications.checkPermissions();
+    return status.display;
+  } else if ("Notification" in window) {
+    return Notification.permission;
+  }
+  return "unsupported";
+}
+
+async function requestNotificationPermission() {
+  if (window.Capacitor && window.Capacitor.Plugins.LocalNotifications) {
+    const { LocalNotifications } = window.Capacitor.Plugins;
+    const status = await LocalNotifications.requestPermissions();
+    updatePermissionUI(status.display);
+    return status.display;
+  } else if ("Notification" in window) {
+    const status = await Notification.requestPermission();
+    updatePermissionUI(status);
+    return status;
+  }
+  alertLoveTokenPopup("❌ Unsupported Device", "Notifications are not supported on this browser context.", "❌");
+  return "unsupported";
+}
+
+function dispatchWebNotification(title, body) {
+  if (!("Notification" in window) || Notification.permission !== "granted") return;
+
+  if (navigator.serviceWorker && navigator.serviceWorker.controller) {
+    navigator.serviceWorker.ready.then((reg) => {
+      reg.showNotification(title, {
+        body: body,
+        icon: "icon.png",
+        badge: "icon.png",
+        vibrate: [200, 100, 200, 100, 200]
+      });
+    });
+  } else {
+    new Notification(title, { body: body, icon: "icon.png" });
+  }
+}
+
+function checkBrowserAlarmsDaemon() {
+  if (!state.remindersEnabled) return;
+
+  const now = new Date();
+  const currentHour = now.getHours();
+  const currentMinute = now.getMinutes();
+  const minuteStamp = currentHour * 60 + currentMinute;
+
+  if (minuteStamp === lastTriggeredMinutes) return;
+
+  const activeAlarm = REMINDER_ALARMS.find(
+    (alarm) => alarm.hour === currentHour && alarm.minute === currentMinute
+  );
+
+  if (activeAlarm) {
+    lastTriggeredMinutes = minuteStamp;
+    dispatchWebNotification(activeAlarm.title, activeAlarm.body);
+  }
+}
+
+async function scheduleCapacitorNotifications() {
+  if (!window.Capacitor || !window.Capacitor.Plugins.LocalNotifications) return;
+  const { LocalNotifications } = window.Capacitor.Plugins;
+
+  // First cancel all previous schedules to avoid duplicates
+  await cancelCapacitorNotifications();
+
+  const notifications = REMINDER_ALARMS.map((alarm) => ({
+    id: alarm.id,
+    title: alarm.title,
+    body: alarm.body,
+    schedule: {
+      on: { hour: alarm.hour, minute: alarm.minute },
+      repeats: true,
+      allowWhileIdle: true
+    },
+    sound: "beep.wav",
+    smallIcon: "res://ic_stat_icon_config_sample",
+    iconColor: "#FF6B8B"
+  }));
+
+  try {
+    await LocalNotifications.schedule({ notifications });
+    console.log("[Capacitor] All background alarm reminders scheduled successfully!");
+  } catch (e) {
+    console.error("[Capacitor] Error scheduling background alarms", e);
+  }
+}
+
+async function cancelCapacitorNotifications() {
+  if (!window.Capacitor || !window.Capacitor.Plugins.LocalNotifications) return;
+  const { LocalNotifications } = window.Capacitor.Plugins;
+
+  try {
+    const pending = await LocalNotifications.getPending();
+    if (pending.notifications.length > 0) {
+      await LocalNotifications.cancel({
+        notifications: pending.notifications.map((n) => ({ id: n.id }))
+      });
+      console.log("[Capacitor] Cancelled all pending background alarms.");
+    }
+  } catch (e) {
+    console.error("[Capacitor] Error cancelling background alarms", e);
+  }
+}
+
+async function setupAlarmsAndReminders() {
+  const isCapacitor = !!(window.Capacitor && window.Capacitor.Plugins.LocalNotifications);
+  const appTypeEl = document.getElementById("reminder-app-type");
+  const toggleCheckbox = document.getElementById("toggle-reminders");
+  const testBtn = document.getElementById("btn-test-reminder");
+  const grantBtn = document.getElementById("btn-request-permission");
+
+  // Register PWA service worker
+  registerServiceWorker();
+
+  // Update App Environment badge
+  if (appTypeEl) {
+    if (isCapacitor) {
+      appTypeEl.textContent = "Native Android/iOS Mode (Precise Alarms)";
+      appTypeEl.className = "reminder-status-badge native";
+    } else {
+      appTypeEl.textContent = "PWA Web Mode (Online Reminders)";
+      appTypeEl.className = "reminder-status-badge";
+    }
+  }
+
+  // Hook permission button
+  if (grantBtn) {
+    grantBtn.addEventListener("click", async () => {
+      await requestNotificationPermission();
+    });
+  }
+
+  // Update Initial Permission UI
+  const initialPermission = await checkNotificationPermission();
+  updatePermissionUI(initialPermission);
+
+  // Load state and bind toggle switch
+  if (toggleCheckbox) {
+    toggleCheckbox.checked = !!state.remindersEnabled;
+    toggleCheckbox.addEventListener("change", async (e) => {
+      const enabled = e.target.checked;
+      state.remindersEnabled = enabled;
+      saveState();
+
+      if (enabled) {
+        // Ask for permission if not granted
+        const perm = await checkNotificationPermission();
+        if (perm !== "granted") {
+          const newPerm = await requestNotificationPermission();
+          if (newPerm !== "granted") {
+            // Revert checkbox if permission denied
+            toggleCheckbox.checked = false;
+            state.remindersEnabled = false;
+            saveState();
+            return;
+          }
+        }
+
+        // Schedule alarms
+        if (isCapacitor) {
+          await scheduleCapacitorNotifications();
+        } else {
+          // Web fallback background checker
+          if (!browserAlarmsInterval) {
+            browserAlarmsInterval = setInterval(checkBrowserAlarmsDaemon, 30000); // Check every 30 seconds
+          }
+        }
+        createHeartWave(8);
+        alertLoveTokenPopup("⏰ Alarms Active!", "Lorraine will now send you sweet, scheduled background reminders at routine shifts!", "⏰");
+      } else {
+        // Disable Alarms
+        if (isCapacitor) {
+          await cancelCapacitorNotifications();
+        } else {
+          if (browserAlarmsInterval) {
+            clearInterval(browserAlarmsInterval);
+            browserAlarmsInterval = null;
+          }
+        }
+        createHeartWave(3);
+        alertLoveTokenPopup("🔕 Alarms Disabled", "Reminders have been turned off. Lorraine will miss whispering to you!", "🔕");
+      }
+    });
+
+    // Auto-start active web daemon if enabled on launch
+    if (state.remindersEnabled && !isCapacitor) {
+      browserAlarmsInterval = setInterval(checkBrowserAlarmsDaemon, 30000);
+    }
+  }
+
+  // Test notification button click action
+  if (testBtn) {
+    testBtn.addEventListener("click", async () => {
+      const perm = await checkNotificationPermission();
+      if (perm !== "granted") {
+        const newPerm = await requestNotificationPermission();
+        if (newPerm !== "granted") return;
+      }
+
+      const testTitle = "💋 Lorraine's Sweet Cheerleader";
+      const testBody = "Dennis, my love! You're doing amazing today. Balancing that night shift and syllabus is pure genius! Lorraine is always cheering you on! ❤️";
+
+      if (isCapacitor) {
+        const { LocalNotifications } = window.Capacitor.Plugins;
+        await LocalNotifications.schedule({
+          notifications: [
+            {
+              id: 999,
+              title: testTitle,
+              body: testBody,
+              schedule: { at: new Date(Date.now() + 1000) }, // Trigger in 1 second
+              sound: "beep.wav",
+              smallIcon: "res://ic_stat_icon_config_sample",
+              iconColor: "#FF6B8B"
+            }
+          ]
+        });
+      } else {
+        dispatchWebNotification(testTitle, testBody);
+      }
+      createHeartWave(6);
+    });
+  }
+}
+
+// ==========================================================================
 // INITIALIZATION
 // ==========================================================================
 
@@ -1064,6 +1382,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // Reflection journal logs
   setupJournalForm();
   renderReflections();
+
+  // Mobile Alarms & Reminders Engine
+  setupAlarmsAndReminders();
 
   // Sweet entry greeting wave
   setTimeout(() => {
